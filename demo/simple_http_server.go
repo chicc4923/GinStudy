@@ -1,4 +1,4 @@
-package main
+package demo
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintln(w, "hello,http")
 }
-func main() {
+func httpServer() {
 	http.HandleFunc("/hello", sayHello)
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
