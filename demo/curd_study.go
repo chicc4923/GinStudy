@@ -1,4 +1,4 @@
-package main
+package demo
 
 import (
 	"Gin_study/table"
@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var user table.UserInfo
+// var user table.UserInfo
 var users []table.UserInfo
 
 func main() {
@@ -64,7 +64,7 @@ func main() {
 	//	Hobby: "IT",
 	//})
 	// 删除一条记录
-	user.ID = 3
+	//user.ID = 3
 	//db.Delete(&user)
-	db.Where("name = ?", "xiaohua").Delete(&user)
+	//db.Where("name = ?", "xiaohua").Delete(&user)
 }
