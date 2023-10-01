@@ -16,9 +16,9 @@ type UserInfo struct { // 数据库的表名为 user_infos
 //	}
 //
 
-// TodoList model
-type TodoList struct {
-	ID     int          `json:"id"`
+// Todo model
+type Todo struct {
+	ID     int          `json:"id" gorm:"primary_key;auto_increment"`
 	Title  string       `json:"title"`
 	Status sql.NullBool `json:"status"`
 }

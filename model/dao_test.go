@@ -22,23 +22,24 @@ func TestMain(m *testing.M) {
 
 // TestCreateTodo 新增事项测试
 func TestCreateTodo(t *testing.T) {
-	data := table.TodoList{
-		ID:    1,
-		Title: "test1",
+	data := table.Todo{
+		ID:    0,
+		Title: "",
 		Status: sql.NullBool{
-			Bool:  true,
-			Valid: true,
+			Bool:  false,
+			Valid: false,
 		},
 	}
+	//data := table.Todo{ID: 0, Title: "1", Status: sql.NullBool{Bool: false, Valid: false}}
 	err := CreateTodo(data)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-// TestGetTodoList 查询所有事项测试
-func TestGetTodoList(t *testing.T) {
-	if err := GetTodoList(); err != nil {
+// TestGetTodo 查询所有事项测试
+func TestGetTodo(t *testing.T) {
+	if err := GetTodo(); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -51,7 +52,7 @@ func TestGetTodoByStatus(t *testing.T) {
 }
 
 func TestUpdateTodo(t *testing.T) {
-	data := table.TodoList{
+	data := table.Todo{
 		ID:    1,
 		Title: "max3",
 		Status: sql.NullBool{ // 如果不这样定义，因为 bool 类型的零值为 false，所以使用 struct 构建时条件语句时不会影响 status字段

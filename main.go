@@ -14,7 +14,7 @@ import (
 */
 
 func main() {
-	router.SetupRouters()
 	model.SetupDB()
+	router.SetupRouters()
 
 }

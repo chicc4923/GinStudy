@@ -17,7 +17,7 @@ func SetupDB() error {
 	}
 	// 创建表，自动迁移(把结构体和表进行对应)
 	//db.AutoMigrate(&table.UserInfo{})
-	err = db.AutoMigrate(&table.TodoList{})
+	err = db.AutoMigrate(&table.Todo{})
 
 	if err != nil {
 		return err
