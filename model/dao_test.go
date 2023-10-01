@@ -3,6 +3,7 @@ package model
 import (
 	"Gin_study/table"
 	"database/sql"
+	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -39,9 +40,11 @@ func TestCreateTodo(t *testing.T) {
 
 // TestGetTodo 查询所有事项测试
 func TestGetTodo(t *testing.T) {
-	if err := GetTodo(); err != nil {
+	list := make([]table.Todo, 0)
+	if err := GetTodo(list); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(list)
 }
 
 // TestGetTodoByStatus 根据可用与否获取事项

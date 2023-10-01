@@ -20,6 +20,7 @@ func SetupRouters() *gin.Engine {
 	TodoG := e.Group("/v1")
 	{
 		TodoG.GET("/todo")
+		TodoG.GET("/list", api.GetTodoList)
 		TodoG.POST("/todo", api.CreateTodo)
 		TodoG.PUT("/todo")
 		TodoG.DELETE("/todo")

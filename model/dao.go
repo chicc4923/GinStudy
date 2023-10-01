@@ -13,9 +13,8 @@ func CreateTodo(data table.Todo) error {
 }
 
 // GetTodo 获取所有事项
-func GetTodo() error {
-	lists := make([]table.Todo, 0)
-	if err := GetDB().Model(&table.Todo{}).Find(&lists).Error; err != nil {
+func GetTodo(lists []table.Todo) error {
+	if err := GetDB().Find(&lists).Error; err != nil {
 		return err
 	}
 	return nil
