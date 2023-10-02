@@ -15,7 +15,7 @@ const (
 	dbSource = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4&parseTime=True&loc=Local"
 )
 
-var DB *gorm.DB
+var dbs *gorm.DB
 
 // TestMain:Golang 约定 TestMain 函数是所有单元测试的入口
 func TestMain(m *testing.M) {
@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatal("can not connect db:", err)
 	}
-	DB = db
+	dbs = db
 	os.Exit(m.Run())
 }
 
@@ -31,26 +31,29 @@ func TestMain(m *testing.M) {
 // TestAddUser 新增用户
 func TestAddUser(t *testing.T) {
 	u1 := table.UserInfo{2, "max", "run"}
-	DB.Create(u1)
+	dbs.Create(u1)
 }
 
 // TestUpdateUser 更新用户
 func TestUpdateUser(t *testing.T) {
 	u1 := table.UserInfo{2, "max2", "run"}
-	DB.Updates(u1)
+	dbs.Updates(u1)
 }
 
-// TestDeleteUser 删除用户
+// TestDeleteUser 删除用户：通过传入 userinfo 结构体删除对应的字段
 func TestDeleteUser(t *testing.T) {
-	DB.Delete(table.UserInfo{2, "max2", "run"})
+	dbs.Delete(table.UserInfo{2, "max2", "run"})
 }
 
-// TestGetUser 获取用户
+// TestGetUser 获取用户	根据主键获得用户
 func TestGetUser(t *testing.T) {
 
 	var u table.UserInfo
 	// 根据主键查询第一个记录
-	DB.First(&u) // First 和 Last 会根据主键排序，分别查询第一条和最后一条数据。只有在目标 struct 是指针或者通过 db.Model() 指定 model 时，该方法才有效。
+	err := dbs.First(&u).Error // First 和 Last 会根据主键排序，分别查询第一条和最后一条数据。只有在目标 struct 是指针或者通过 db.Model() 指定 model 时，该方法才有效。
+	if err != nil {
+		log.Fatal(err)
+	}
 	//  这里只能传指针，我的理解是查询到的结果需要传入原结构体而不是副本。
 	fmt.Println(u)
 	// DB.Find() 也是需要传入结构体切片的指针，返回的是所有记录
