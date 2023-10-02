@@ -1,7 +1,5 @@
 package table
 
-import "database/sql"
-
 type UserInfo struct { // 数据库的表名为 user_infos
 	ID    int
 	Name  string `gorm:"default:'max'"`
@@ -18,7 +16,7 @@ type UserInfo struct { // 数据库的表名为 user_infos
 
 // Todo model
 type Todo struct {
-	ID     int          `json:"id" gorm:"primary_key;auto_increment"`
-	Title  string       `json:"title"`
-	Status sql.NullBool `json:"status"`
+	ID     int    `json:"id" gorm:"primary_key;auto_increment"`
+	Title  string `json:"title"`
+	Status bool   `json:"status"`
 }
