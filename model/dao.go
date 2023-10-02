@@ -45,7 +45,7 @@ func UpdateTodosByID(data table.Todo, id int) error {
 	if id == 0 {
 		return errors.New("ID 不存在！")
 	}
-	if err := GetDB().Debug().Model(&table.Todo{}).Where("id = ?", id).Save(&data).Error; err != nil {
+	if err := GetDB().Debug().Model(&table.Todo{}).Where("id = ?", id).Updates(&data).Error; err != nil {
 		return err
 	}
 	return nil
