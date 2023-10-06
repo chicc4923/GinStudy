@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/http/httputil"
 	"strconv"
 )
 
@@ -96,4 +97,33 @@ func UpdateTodo(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, data)
 	}
+}
+
+/*
+正向代理：
+代理会隐藏客户端的真实信息（IP、端口），以自己的身份代替客户端在互联网上发起请求，
+并将结果转发给客户端。代理可以保护客户端，帮助客户端访问自己无法访问的网络，客户端需要将特定请求或全部请求主动配置为请求代理服务器。
+反向代理：
+反向代理会隐藏服务端的真实信息（IP、端口），把自己作为服务端暴露在互联网中，通过把请求转发给真实服务器处理，拿到结果再返回，来对外提供服务。
+反向代理保护了服务端，隔离了有效环境，并进行多个服务器的负载均衡。
+服务端需要将自己配置到反向代理中，然后将反向代理暴露在公网。
+
+*/
+
+func Proxy(c *gin.Context) {
+	host := "127.0.0.1:8080"
+	ur := c.Param("path")
+	fmt.Println(ur)
+	proxy := &httputil.ReverseProxy{
+		Director: func(req *http.Request) {
+			req.URL.Scheme = "http"
+			req.URL.Host = host
+			req.URL.Path = "/v1" + ur
+		},
+	}
+	fmt.Println(">>>>>>", c.Request.URL.Path)
+	c.Request.URL.Path = "/v1" + ur
+	fmt.Println(">>>>>>2", c.Request.URL.Path)
+	proxy.ServeHTTP(c.Writer, c.Request)
+
 }

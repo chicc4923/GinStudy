@@ -17,6 +17,7 @@ func SetupRouters() *gin.Engine {
 	e.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
+	e.GET("/v2/*path", api.Proxy)
 	TodoG := e.Group("/v1")
 	{
 		TodoG.GET("/todo:id")
